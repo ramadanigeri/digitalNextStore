@@ -9,8 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet';
-import { Separator } from '@/components/ui/separator';
-import { formatPrice } from '@/lib/utils';
+import { Separator } from '@/src/components/ui/separator';
+import { formatPrice } from '@/src/lib/utils';
 import Link from 'next/link';
 import { buttonVariants } from './ui/button';
 import Image from 'next/image';
