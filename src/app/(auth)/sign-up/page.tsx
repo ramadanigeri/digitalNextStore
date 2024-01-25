@@ -37,7 +37,7 @@ const Page = () => {
             <Icons.logo className="h-20 w-20" />
             <h1 className="text-2xl font-bold">Create an account</h1>
             <Link
-              href="/sign-ind"
+              href="/sign-in"
               className={buttonVariants({
                 variant: 'link',
                 className: 'gap-1.5',

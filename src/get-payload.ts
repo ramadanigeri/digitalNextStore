@@ -47,7 +47,7 @@ export const getPayloadClient = async ({
       email: {
         transport: transporter,
         // Add only your personal email to receive them on resend inbox during development.
-        fromAddress: 'ramadanigeri@gmail.com',
+        fromAddress: 'onboarding@resend.dev>',
         fromName: 'digitalNextStore',
       },
       secret: process.env.PAYLOAD_SECRET,
