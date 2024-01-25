@@ -4,17 +4,16 @@ import { Icons } from '@/src/components/Icons';
 import { Button, buttonVariants } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
-import { cn } from '@/src/lib/utils';
-import { ArrowRight } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import Link from 'next/link';
 import {
   AuthCredentialsValidator,
   TAuthCredentialsValidator,
 } from '@/src/lib/Validators/account-credentials-validator';
+import { cn } from '@/src/lib/utils';
 import { trpc } from '@/src/trpc/client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 
 const Page = () => {
   const {
@@ -25,11 +24,9 @@ const Page = () => {
     resolver: zodResolver(AuthCredentialsValidator),
   });
 
-  const { data } = trpc.anyApiRoute.useQuery();
-  console.log(data);
-
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
   const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-    // send data to the server
+    mutate({ email, password });
   };
 
   return (
@@ -67,6 +64,7 @@ const Page = () => {
                   <Label htmlFor="password">Password</Label>
                   <Input
                     {...register('password')}
+                    type="password"
                     className={cn({
                       'focus-visible:ring-red-500': errors.password,
                     })}
