@@ -77,7 +77,7 @@ export const paymentRouter = router({
 
   pollOrderStatus: privateProcedure
     .input(z.object({ orderId: z.string() }))
-    .query(({ input }) => {
+    .query(async ({ input }) => {
       const { orderId } = input;
       const payload = await getPayloadClient();
 
