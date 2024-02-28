@@ -5,9 +5,10 @@ import { cookies } from "next/headers"
 import { getPayloadClient } from "@/src/get-payload"
 import { notFound, redirect } from "next/navigation"
 import { PRODUCT_CATEGORIES } from "../config"
-import { Product, ProductFile } from "@/src/payload-types"
+import { Product, ProductFile, User } from "@/src/payload-types"
 import { formatPrice } from "@/src/lib/utils"
 import Link from "next/link"
+import PaymentStatus from "@/src/components/PaymentStatus"
 
 interface PageProps {
     searchParams: {
@@ -126,6 +127,8 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                             <p className="text-base">{formatPrice(orderTotal + 1)}</p>
                         </div>
                     </div>
+
+                    <PaymentStatus isPaid={order._isPaid} orderEmail={(order.user as User).email} orderId={order.id} />
 
                     <div className="mt-16 border-t border-gray-200 py-6 text-right">
                         <Link href='/products' className='text-sm font-medium text-blue-600 hover:text-blue-500'>
