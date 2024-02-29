@@ -16,7 +16,7 @@ const Page = () => {
 
   const router = useRouter();
 
-  const { mutate: createCheckoutSession, isLoading } =
+  const { mutate: createCheckoutSession, isPending } =
     trpc.payment.createSession.useMutation({
       onSuccess: ({ url }) => {
         if (url) router.push(url);
@@ -197,12 +197,12 @@ const Page = () => {
 
             <div className="mt-6">
               <Button
-                disabled={items.length === 0 || isLoading}
+                disabled={items.length === 0 || isPending}
                 onClick={() => createCheckoutSession({ productIds })}
                 className="w-full"
                 size="lg"
               >
-                {isLoading ? (
+                {isPending ? (
                   <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
                 ) : null}
                 Checkout

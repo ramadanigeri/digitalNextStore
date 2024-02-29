@@ -11,7 +11,7 @@ import {
 import { cn } from '@/src/lib/utils';
 import { trpc } from '@/src/trpc/client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -40,10 +40,10 @@ const Page = () => {
     resolver: zodResolver(AuthCredentialsValidator),
   });
 
-  const { mutate: signIn, isLoading } = trpc.auth.singIn.useMutation({
-    onSuccess: () => {
+  const { mutate: signIn, isPending } = trpc.auth.signIn.useMutation({
+    onSuccess: async () => {
       toast.success('Signed in successfully');
-      router.refresh;
+      router.refresh();
 
       if (origin) {
         router.push(`/${origin}`);
@@ -70,19 +70,19 @@ const Page = () => {
 
   return (
     <>
-      <div className="containert relative flex pt-20 flex-col items-center justify-center lg:px-0">
+      <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center space-y-2 text-center">
             <Icons.logo className="h-20 w-20" />
-            <h1 className="text-2xl font-bold">
-              Sign in to your {isSeller ? 'seller' : ''} account
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Sign in to your {isSeller ? 'seller' : ''}{' '}account
             </h1>
             <Link
-              href="/sign-up"
               className={buttonVariants({
                 variant: 'link',
                 className: 'gap-1.5',
               })}
+              href="/sign-up"
             >
               Don&apos;t have an account?
               <ArrowRight className="h-4 w-4" />
@@ -123,7 +123,12 @@ const Page = () => {
                   )}
                 </div>
 
-                <Button>Sign In</Button>
+                <Button disabled={isPending}>
+                  {isPending && (
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                  )}
+                  Sign in
+                </Button>
               </div>
             </form>
 
@@ -145,15 +150,15 @@ const Page = () => {
               <Button
                 onClick={continueAsBuyer}
                 variant="secondary"
-                disabled={isLoading}
+                disabled={isPending}
               >
-                Continue
+                Continue as customer
               </Button>
             ) : (
               <Button
                 onClick={continueAsSeller}
                 variant="secondary"
-                disabled={isLoading}
+                disabled={isPending}
               >
                 Continue as seller
               </Button>
