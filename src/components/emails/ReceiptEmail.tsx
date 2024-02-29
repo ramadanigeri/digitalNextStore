@@ -10,6 +10,8 @@ interface ReceiptEmailProps {
     products: Product[]
 }
 
+import * as React from "react"
+
 export const ReceiptEmail = ({ email, date, orderId, products }: ReceiptEmailProps) => {
     const total = products.reduce((acc, curr) => acc + curr.price, 0) + 1
     return (

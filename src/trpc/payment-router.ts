@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { privateProcedure, publicProcedure, router } from './trpc';
-import { TRPCError } from '@trpc/server/unstable-core-do-not-import';
+import { TRPCError } from '@trpc/server';
 import { getPayloadClient } from '../get-payload';
 import { stripe } from '../lib/stripe';
 import type Stripe from 'stripe';
@@ -70,7 +70,6 @@ export const paymentRouter = router({
 
         return { url: stripeSession.url };
       } catch (err) {
-        console.log(err);
         return { url: null };
       }
     }),

@@ -14,7 +14,10 @@ const PaymentStatus = ({ orderEmail, orderId, isPaid }: PaymentStatusProps) => {
     const router = useRouter()
     const { data } = trpc.payment.pollOrderStatus.useQuery({ orderId }, {
         enabled: isPaid === false,
-        refetchInterval: (data) => (data?.isPaid ? false : 1000)
+
+        refetchInterval: (data) =>
+            // @ts-expect-error
+            data?.isPaid ? false : 1000
     })
 
     useEffect(() => {
