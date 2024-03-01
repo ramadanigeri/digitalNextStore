@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        hostname: 'localhost',
-        pathname: '**',
-        port: '3000',
-        protocol: 'http',
-      },
+    domains: [
+      'localhost',
+      // uncomment when you have production url
+      // 'your live project url'
     ],
   },
 };
