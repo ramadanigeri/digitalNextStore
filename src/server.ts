@@ -49,11 +49,13 @@ const start = async () => {
 
   cartRouter.get('/', (req, res) => {
     const request = req as PayloadRequest;
+
     if (!request.user) return res.redirect('/sign-in?origin=cart');
 
     const parsedUrl = parse(req.url, true);
+    const { query } = parsedUrl;
 
-    return nextApp.render(req, res, '/cart', parsedUrl.query);
+    return nextApp.render(req, res, '/cart', query);
   });
 
   app.use('/cart', cartRouter);
